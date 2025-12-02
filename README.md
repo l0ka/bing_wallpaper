@@ -23,7 +23,7 @@ Create `~/.config/autostart/bing-wallpaper.desktop`:
 Type=Application
 Name=Bing Wallpaper
 Comment=Set Bing picture of the day as wallpaper
-Exec=/home/<your-username>/Documents/bing_wallpaper/bing_wallpaper.py
+Exec=/foo/bing_wallpaper/bing_wallpaper.py
 X-GNOME-Autostart-enabled=true
 ```
 Replace `<your-username>` with your actual username.
@@ -36,7 +36,7 @@ Description=Bing Wallpaper of the Day
 
 [Service]
 Type=oneshot
-ExecStart=/home/<your-username>/Documents/bing_wallpaper/bing_wallpaper.py
+ExecStart=/foo/bing_wallpaper/bing_wallpaper.py
 ```
 
 Create `~/.config/systemd/user/bing-wallpaper.timer`:
@@ -64,6 +64,12 @@ Check status:
 systemctl --user status bing-wallpaper.timer
 journalctl --user -u bing-wallpaper.service -n 50 --no-pager
 ```
+
+## Combine Both Approaches
+- **Autostart at Login** ensures the wallpaper updates immediately when you log in.
+- **systemd Timer** ensures the wallpaper refreshes daily even if you keep your system running for days.
+
+Implement both for the best experience.
 
 ## License
 MIT License
