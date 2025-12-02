@@ -1,6 +1,6 @@
 # Bing Wallpaper for GNOME
 
-A simple Python script that sets Bing's picture of the day as your GNOME wallpaper on Linux (Wayland-friendly).
+A simple Python script that sets Bing's picture of the day as your GNOME wallpaper.
 
 ## Features
 - Downloads Bing's daily wallpaper
@@ -11,7 +11,7 @@ A simple Python script that sets Bing's picture of the day as your GNOME wallpap
 ## Installation
 Clone the repository:
 ```bash
-git clone https://github.com/<your-username>/bing_wallpaper.git
+git clone https://github.com/l0ka/bing_wallpaper.git
 cd bing_wallpaper
 python bing_wallpaper.py
 ```
