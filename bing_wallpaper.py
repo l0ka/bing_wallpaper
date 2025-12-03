@@ -49,8 +49,7 @@ def ensure_cache_dir() -> Path:
 
 def get_image_urls() -> tuple[str, str]:
     """
-    Fetch Bing JSON once, extract url and urlbase.
-    Returns (hd_url, uhd_url).
+    Fetch Bing JSON once, extract url and urlbase. Returns (hd_url, uhd_url).
     """
     raw = http_get(BING_URL)
     data = json.loads(raw.decode("utf-8"))
@@ -96,13 +95,26 @@ def set_gnome_wallpaper(image_path: Path) -> bool:
     logger.info("Wallpaper set.")
     return True
 
+def cleanup_cache(cache_dir: Path, keep: int = 2) -> None:
+    """Keep only the most recent `keep` images in cache_dir."""
+    files = sorted(cache_dir.glob("bing_*.jpg"), key=lambda f: f.stat().st_mtime, reverse=True)
+    if len(files) > keep:
+        for old_file in files[keep:]:
+            try:
+                old_file.unlink()
+                logger.info(f"Removed old image: {old_file}")
+            except Exception as e:
+                logger.warning(f"Failed to remove {old_file}: {e}")
+
 def run_once() -> bool:
     logger.info("Starting Bing Wallpaper")
     cache_dir = ensure_cache_dir()
     date_str = datetime.now().strftime("%Y%m%d")
     hd_url, uhd_url = get_image_urls()
     image_path = download_image((hd_url, uhd_url), cache_dir, date_str)
-    return set_gnome_wallpaper(image_path)
+    success = set_gnome_wallpaper(image_path)
+    cleanup_cache(cache_dir, keep=2)
+    return success
 
 def main():
     try:
