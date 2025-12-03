@@ -8,7 +8,7 @@ A simple Python script that sets Bing's picture of the day as your GNOME wallpap
 - Caches images in `~/.cache/bing-wallpaper`
 - Sets wallpaper using `gsettings` (GNOME only)
 
-## Installation
+## Usage
 Clone the repository:
 ```bash
 git clone https://github.com/l0ka/bing_wallpaper.git
